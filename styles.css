@@ -1,0 +1,302 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+#container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#wikipedia-container {
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid #ccc;
+}
+
+#wikipedia-frame {
+  width: 100%;
+  height: 100%;
+}
+
+#map-container {
+  position: relative;
+  width: 70%;
+  height: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.control-group {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.control-group:last-child {
+  margin-bottom: 0;
+}
+
+select, input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  width: 100%;
+}
+
+#year-input, #month-input {
+  width: 70px;
+  margin-right: 5px;
+}
+
+button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+button:hover {
+  background-color: #3367d6;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+
+/* Remove or comment out speed slider styles */
+/*
+#speed-slider {
+  margin-left: 10px;
+}
+*/
+
+.highlighted-text {
+  background-color: yellow;
+}
+
+.highlight-active {
+  background-color: rgba(255, 255, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Custom map markers */
+.troop-marker {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid;
+  border-radius: 50%;
+  text-align: center;
+  padding: 5px;
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.battle-marker {
+  animation: pulse 1s infinite;
+  cursor: pointer;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.marker-icon.battle {
+  background: #ff4444;
+  border-radius: 50%;
+  padding: 8px;
+  color: white;
+}
+
+.marker-count {
+  background: white;
+  border: 3px solid;
+  border-radius: 50%;
+  padding: 5px;
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Japanese troops */
+.japanese {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+/* Korean troops */
+.korean {
+  border-color: #4444ff;
+  color: #4444ff;
+}
+
+/* Toggle button styles */
+#sound-toggle {
+  background-color: #4CAF50;
+}
+
+#sound-toggle.muted {
+  background-color: #f44336;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  #container {
+    flex-direction: column;
+  }
+  
+  #wikipedia-container {
+    width: 100%;
+    height: 30%;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  #map-container {
+    width: 100%;
+    height: 70%;
+  }
+}
+
+.battle-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker-icon {
+  background-color: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid;
+}
+
+.marker-icon.battle {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.event-marker .marker-icon {
+  border-color: inherit;
+}
+
+.troop-marker {
+  cursor: pointer;
+}
+
+.timeline-container {
+    position: relative;
+    margin: 20px 0;
+    width: 300px;
+}
+
+#timeline-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 10px;
+}
+
+.timeline-label {
+    padding: 4px 6px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.timeline-label:hover {
+    background-color: #e0e0e0;
+}
+
+.timeline-label.active {
+    background-color: #4285f4;
+    color: white;
+}
+
+.timeline-label.year-start {
+    background-color: #e0e0e0;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* Troop count markers */
+.troop-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+}
+
+.troop-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    object-fit: contain;
+}
+
+.troop-count {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Battle animation */
+.battle-marker {
+    width: 64px;
+    height: 64px;
+    animation: battle-animation 1s steps(8) infinite;
+    background-size: 512px 64px; /* 8 frames * 64px width */
+    background-repeat: no-repeat;
+}
+
+@keyframes battle-animation {
+    from { background-position: 0 0; }
+    to { background-position: -512px 0; }
+}

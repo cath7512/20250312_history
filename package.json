@@ -1,0 +1,14 @@
+{
+  "name": "20250312_history",
+  "version": "1.0.0",
+  "description": "An interactive historical map application that visualizes the events of the Korea-Japan War (Imjin War) from 1592-1598 with timeline controls, Wikipedia integration, and animations.",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "http-server -c-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
