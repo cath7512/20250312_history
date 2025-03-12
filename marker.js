@@ -1,6 +1,7 @@
 let markers = [];
 let polylines = [];
 
+// 전투 마커, 부대 마커 생성
 function createBattleMarker(battle) {
     const element = document.createElement('div');
     element.className = 'battle-marker';
@@ -17,13 +18,7 @@ function createBattleMarker(battle) {
     marker.addListener('click', () => {
         showBattleInfo(battle, marker);
     });
-    
-    createTroopMarkers(battle);
-    
-    if (battle.soundEffect) {
-        playSound(battle.soundEffect);
-    }
-    
+        
     return marker;
 }
 

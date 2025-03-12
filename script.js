@@ -254,7 +254,11 @@ function processTimelineEvent(timelineEvent) {
       case 'battle':
       case 'naval_battle':
         let battleMarker = createBattleMarker(event);
+        createTroopMarkers(event);
         showBattleInfo(event, battleMarker);
+        if (event.soundEffect) {
+          playSound(event.soundEffect);
+        }        
         break;
       case 'movement':
       case 'invasion':
