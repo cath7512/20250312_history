@@ -1,0 +1,174 @@
+/* Custom styles for Wikipedia iframe */
+
+/* Add a highlight style for active sections */
+.highlight-active {
+  background-color: rgba(255, 255, 0, 0.2);
+  border-left: 3px solid #f8b739;
+  padding-left: 10px;
+  animation: fadeHighlight 2s;
+}
+
+@keyframes fadeHighlight {
+  from {
+    background-color: rgba(255, 255, 0, 0.5);
+  }
+  to {
+    background-color: rgba(255, 255, 0, 0.2);
+  }
+}
+
+/* Style for the Wikipedia container */
+#wikipedia-container {
+  position: relative;
+  background-color: #f8f9fa;
+  overflow: hidden;
+  resize: both;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style for the Wikipedia iframe */
+#wikipedia-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#wikipedia-frame.loaded {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Loading indicator for the iframe */
+#wikipedia-container::before {
+  content: "Loading Wikipedia content...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #666;
+  z-index: 1;
+  display: none; /* Hide by default */
+}
+
+#wikipedia-container.loading::before {
+  display: block; /* Show only when loading */
+}
+
+/* Hide Wikipedia elements that might cause issues */
+#wikipedia-frame {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+}
+
+#wikipedia-frame.loaded {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Add a custom error message style */
+.wiki-error {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #ea4335;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+/* Hide console error messages that might appear in the iframe */
+.mw-message-box-error {
+  display: none !important;
+}
+
+/* Improve readability of Wikipedia content */
+#wikipedia-container {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Add resize handle */
+#wikipedia-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: se-resize;
+  background: linear-gradient(135deg, transparent 50%, #ccc 50%);
+}
+
+/* Troop marker styles */
+.troop-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+
+.troop-marker img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: filter 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.marker-count {
+  position: absolute;
+  top: 24px; /* Position below the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* Japanese troops (red) */
+.troop-marker[data-side="japanese"] img {
+  filter: hue-rotate(0deg) saturate(150%);
+}
+
+/* Korean troops (blue) */
+.troop-marker[data-side="korean"] img {
+  filter: hue-rotate(240deg) saturate(150%);
+}
+
+/* Chinese troops (green) */
+.troop-marker[data-side="chinese"] img {
+  filter: hue-rotate(120deg) saturate(150%);
+}
+
+/* Highlighted section */
+.highlighted-section {
+  background-color: rgba(255, 255, 0, 0.2);
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.5s ease;
+}

@@ -1,73 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Historical War Map - Korea-Japan War</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Additional styles for advanced markers */
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historical War Map - Korea-Japan War</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="wiki-styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="wiki-styles.css" />
+    <style>
+      /* Additional styles for advanced markers */
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="wikipedia-container">
+        <iframe
+          id="wikipedia-frame"
+          src="https://en.wikipedia.org/wiki/Japanese_invasions_of_Korea_(1592%E2%80%931598)"
+          frameborder="0"
+          title="Wikipedia Article on Japanese invasions of Korea (1592–1598)"
+        ></iframe>
+      </div>
 
-  </style>
-</head>
-<body>
-  <div id="container">
-    <div id="wikipedia-container">
-      <iframe id="wikipedia-frame" src="https://en.wikipedia.org/wiki/Japanese_invasions_of_Korea_(1592%E2%80%931598)" frameborder="0" title="Wikipedia Article on Japanese invasions of Korea (1592–1598)"></iframe>
-    </div>
-    
-    <div id="map-container">
-      <div id="map"></div>
-      
-      <div id="controls">
-        <div class="control-group">
-          <select id="event-selector" title="Event Selector">
-            <option value="imjin-war">Korea-Japan War (Imjin War)</option>
-          </select>
-        </div>
-        
-        <div class="control-group timeline-container">
-          <div id="timeline-labels"></div>
-        </div>
-        
-        <div class="control-group">
-          <button id="backward-btn" title="Previous Month"><i class="fas fa-step-backward"></i></button>
-          <button id="play-btn" title="Play"><i class="fas fa-play"></i></button>
-          <button id="stop-btn" title="Stop"><i class="fas fa-stop"></i></button>
-          <button id="forward-btn" title="Next Month"><i class="fas fa-step-forward"></i></button>
-        </div>
-        
-        <div class="control-group">
-          <button id="sound-toggle" title="Toggle Sound">
-            <i class="fas fa-volume-mute"></i>
-          </button>
+      <div id="map-container">
+        <div id="map"></div>
+
+        <div id="controls">
+          <div class="control-group">
+            <select id="event-selector" title="Event Selector">
+              <option value="imjin-war">Korea-Japan War (Imjin War)</option>
+            </select>
+          </div>
+
+          <div class="control-group timeline-container">
+            <div id="timeline-labels"></div>
+          </div>
+
+          <div class="control-group">
+            <button id="backward-btn" title="Previous Month">
+              <i class="fas fa-step-backward"></i>
+            </button>
+            <button id="play-btn" title="Play">
+              <i class="fas fa-play"></i>
+            </button>
+            <button id="stop-btn" title="Stop">
+              <i class="fas fa-stop"></i>
+            </button>
+            <button id="forward-btn" title="Next Month">
+              <i class="fas fa-step-forward"></i>
+            </button>
+          </div>
+
+          <div class="control-group">
+            <button id="sound-toggle" title="Toggle Sound">
+              <i class="fas fa-volume-mute"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Load data first -->
-  <script src="data.js"></script>
-  
-  <!-- Load sound system before other scripts -->
-  <script src="sound.js"></script>
-  
-  <!-- Load other modules -->
-  <script src="wiki.js"></script>
-  <script src="infowindow.js"></script>
-  <script src="marker.js"></script>
-  <script src="script.js"></script>
-  
-  <script>
-    function initMap() {
-      if (window.initializeMap) {
-        window.initializeMap();
+    <!-- Load data first -->
+    <script src="data.js"></script>
+
+    <!-- Load sound system before other scripts -->
+    <script src="sound.js"></script>
+
+    <!-- Load other modules -->
+    <script src="wiki.js"></script>
+    <script src="polylines.js"></script>
+    <script src="marker.js"></script>
+    <script src="infowindow.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      function initMap() {
+        if (window.initializeMap) {
+          window.initializeMap();
+        }
       }
-    }
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsnTLzPhhK5qxGVWenUJpRUOPSwn5uoLg&libraries=marker&callback=initMap&loading=async">
-  </script>
-</body>
+    </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsnTLzPhhK5qxGVWenUJpRUOPSwn5uoLg&libraries=marker&callback=initMap&loading=async"
+    ></script>
+  </body>
 </html>
