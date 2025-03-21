@@ -52,6 +52,7 @@ const warData = {
                       },
                     },
                     location: { lat: 34.4167, lng: 129.3333 },
+                    icon: "./resources/img/soldier_japanese2.png",
                     color: "#e0451e",
                     commander: "Konishi Yukinaga",
                   },
@@ -64,6 +65,7 @@ const warData = {
                       },
                     },
                     color: "#e6a697",
+                    icon: "./resources/img/soldier_japanese2.png",
                     commander: "Kuroda Nagamasa",
                     date: { month: 5, day: 20 },
                     location: { lat: 35.229, lng: 129.091 }, // outskirts of Busan
@@ -75,7 +77,7 @@ const warData = {
                     forces: {
                       army: {
                         count: 5000,
-                        icon: "./resources/img/soldier_joseon.png",
+                        icon: "./resources/img/soldier_joseon2.png",
                       },
                       naval: {
                         count: 1000,
@@ -87,6 +89,7 @@ const warData = {
                       lng: 129.0756,
                     },
                     color: "#3daa0a",
+                    icon: "./resources/img/soldier_joseon.png",
                     commander: "Jeong Bal",
                     defenses: "wooden fortress and coastal barriers",
                   },
@@ -95,11 +98,12 @@ const warData = {
                     forces: {
                       army: {
                         count: 25000,
-                        icon: "./resources/img/soldier_joseon.png",
+                        icon: "./resources/img/soldier_joseon2.png",
                       },
                     },
                     commander: "Yi Il",
                     color: "#84ad71",
+                    icon: "./resources/img/soldier_joseon.png",
                     date: { month: 5, day: 10 },
                     location: { lat: 36.1111, lng: 128.3333 }, // Gyeongju
                   },
@@ -107,22 +111,6 @@ const warData = {
               },
             ],
             soundEffect: "./resources/sound/naval_battle.mp3",
-            reinforcements: [
-              {
-                type: "Korean",
-                count: { army: 25000 },
-                commander: "Yi Il",
-                arrival: { month: 5, day: 10 },
-                location: { lat: 36.1111, lng: 128.3333 }, // Gyeongju
-              },
-              {
-                type: "Japanese",
-                count: { army: 12000 },
-                commander: "Kuroda Nagamasa",
-                arrival: { month: 5, day: 20 },
-                location: { lat: 35.229, lng: 129.091 }, // outskirts of Busan
-              },
-            ],
             movements: [
               {
                 from: { lat: 34.4167, lng: 129.3333 }, // Tsushima, Japan

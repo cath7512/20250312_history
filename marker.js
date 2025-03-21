@@ -23,20 +23,16 @@ function createTroopMarkers(event) {
   if (event.troops) {
     event.troops.forEach((troopGroup) => {
       Object.entries(troopGroup).forEach(([faction, positions]) => {
-        let troopIcon = null;
         positions.forEach((troop) => {
-          troopIcon = getTroopIcon(troop);
-
-          if (troop.type === "reinforcements") {
-            troopIcon = getReinforcementIcon(troopIcon);
-          }
+          const contentNode = generateTroopContent(troop); // Generate a Node instead of a string
 
           const marker = new google.maps.marker.AdvancedMarkerElement({
             position: { lat: troop.location.lat, lng: troop.location.lng },
-            content: troopIcon,
+            content: contentNode, // Pass the Node here
             title: `${faction}: ${troop.commander}`,
             map: map, // Ensure the marker is added to the map
           });
+
           marker.addEventListener("gmp-click", () => {
             createTroopInfo(marker);
           });
@@ -47,10 +43,52 @@ function createTroopMarkers(event) {
   }
 }
 
+function generateTroopContent(troop) {
+  // Use the existing troop-container from getTroopIcon
+  const troopContainer = getTroopIcon(troop);
+  troopContainer.style.position = "relative"; // Ensure it's a positioning reference for its children
+
+  // Create a wrapper for troopContainer, army, and navy
+  const wrapper = document.createElement("div");
+  wrapper.style.position = "relative"; // Ensure wrapper can position elements correctly
+  wrapper.style.display = "inline-block"; // Keep elements tightly grouped
+  wrapper.appendChild(troopContainer); // Add troopContainer first
+
+  // Add army details
+  if (troop.forces?.army) {
+    const armyElement = document.createElement("div");
+    armyElement.style.position = "absolute"; // Position relative to troop-container
+    armyElement.style.top = `${troopContainer.offsetHeight}px`; // Align to the bottom of troop-container
+    armyElement.style.left = `${troopContainer.offsetWidth + 10}px`; // Align to the right of troop-container with 10px gap
+    armyElement.innerHTML = `
+      <img src="${troop.forces.army.icon}" alt="Army Icon" style="width:20px; height:20px; margin-right:5px;">
+      ${troop.forces.army.count}
+    `;
+    wrapper.appendChild(armyElement);
+  }
+
+  // Add navy details
+  if (troop.forces?.naval) {
+    const navyElement = document.createElement("div");
+    navyElement.style.position = "absolute";
+    navyElement.style.top = `${troopContainer.offsetHeight + 30}px`; // Position below the armyElement (if present)
+    navyElement.style.left = `${troopContainer.offsetWidth + 10}px`; // Same horizontal alignment as army
+    navyElement.innerHTML = `
+      <img src="${
+        troop.forces.naval.icon
+      }" alt="Navy Icon" style="width:20px; height:20px; margin-right:5px;">
+      ${troop.forces.naval.count} (Ships: ${troop.forces.naval.ships || 0})
+    `;
+    wrapper.appendChild(navyElement);
+  }
+
+  return wrapper; // Return the wrapper containing everything
+}
+
 function getTroopIcon(troop) {
   // Add the soldier image
   const img = document.createElement("img");
-  img.src = troop.forces.army.icon;
+  img.src = troop.icon;
   img.alt = troop.type;
   img.style.width = "20px";
   img.style.height = "20px";
@@ -62,8 +100,8 @@ function getTroopIcon(troop) {
   container.style.setProperty("--troop-color", troop.color); // Apply dynamic background color
   container.style.width = `${parseInt(container.style.width)}px`; // Reduce width slightly
   container.style.position = "absolute";
-  container.style.top = "-10px"; // Use `top` instead of `margin-top`
-  container.style.left = "10px";
+  container.style.top = "20px"; // Use `top` instead of `margin-top`
+  container.style.left = "70px";
 
   // Add text for troop count
   const text = document.createElement("div");
