@@ -44,96 +44,102 @@ function createTroopMarkers(event) {
 }
 
 function generateTroopContent(troop) {
-  // Use the existing troop-container from getTroopIcon
+  // 주력군 아이콘 생성
   const troopContainer = getTroopIcon(troop);
-  troopContainer.style.position = "relative"; // Ensure it's a positioning reference for its children
 
-  // Create a wrapper for troopContainer, army, and navy
+  // 전체 요소를 포함할 wrapper 생성
   const wrapper = document.createElement("div");
-  wrapper.style.position = "relative"; // Ensure wrapper can position elements correctly
-  wrapper.style.display = "inline-block"; // Keep elements tightly grouped
-  wrapper.appendChild(troopContainer); // Add troopContainer first
+  wrapper.style.position = "absolute"; // 절대 위치 사용
+  wrapper.style.left = "50px"; // 왼쪽에서 50px 이동 (기존 위치에서 오른쪽으로 이동)
+  wrapper.style.top = "20px"; // 원래 높이 유지
+  wrapper.style.display = "flex";
+  wrapper.style.alignItems = "flex-start";
+  wrapper.appendChild(troopContainer); // 주력군 먼저 배치
 
-  // Add army details
+  // 육군과 해군 정보를 담을 컨테이너
+  const forcesContainer = document.createElement("div");
+  forcesContainer.style.display = "flex";
+  forcesContainer.style.flexDirection = "column"; // 세로 배치 (육군 위, 해군 아래)
+  forcesContainer.style.marginLeft = "10px"; // 주력군과의 간격
+
+  // 육군 정보 추가
   if (troop.forces?.army) {
     const armyElement = document.createElement("div");
-    armyElement.style.position = "absolute"; // Position relative to troop-container
-    armyElement.style.top = `${troopContainer.offsetHeight}px`; // Align to the bottom of troop-container
-    armyElement.style.left = `${troopContainer.offsetWidth + 10}px`; // Align to the right of troop-container with 10px gap
+    armyElement.style.display = "flex";
+    armyElement.style.alignItems = "center";
     armyElement.innerHTML = `
       <img src="${troop.forces.army.icon}" alt="Army Icon" style="width:20px; height:20px; margin-right:5px;">
-      ${troop.forces.army.count}
+      <span>${troop.forces.army.count}</span>
     `;
-    wrapper.appendChild(armyElement);
+    forcesContainer.appendChild(armyElement);
   }
 
-  // Add navy details
+  // 해군 정보 추가
   if (troop.forces?.naval) {
     const navyElement = document.createElement("div");
-    navyElement.style.position = "absolute";
-    navyElement.style.top = `${troopContainer.offsetHeight + 30}px`; // Position below the armyElement (if present)
-    navyElement.style.left = `${troopContainer.offsetWidth + 10}px`; // Same horizontal alignment as army
+    navyElement.style.display = "flex";
+    navyElement.style.alignItems = "center";
+    navyElement.style.marginTop = troop.forces?.army ? "5px" : "0"; // 육군이 있으면 간격 추가
     navyElement.innerHTML = `
       <img src="${
         troop.forces.naval.icon
       }" alt="Navy Icon" style="width:20px; height:20px; margin-right:5px;">
-      ${troop.forces.naval.count} (Ships: ${troop.forces.naval.ships || 0})
+      <span>${troop.forces.naval.count} (Ships: ${
+      troop.forces.naval.ships || 0
+    })</span>
     `;
-    wrapper.appendChild(navyElement);
+    forcesContainer.appendChild(navyElement);
   }
 
-  return wrapper; // Return the wrapper containing everything
+  // 육군이나 해군 정보가 있을 경우에만 forcesContainer를 wrapper에 추가
+  if (troop.forces?.army || troop.forces?.naval) {
+    wrapper.appendChild(forcesContainer);
+  }
+
+  return wrapper;
 }
 
 function getTroopIcon(troop) {
-  // Add the soldier image
+  // 주력군 세부 정보를 포함할 컨테이너 생성
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.flexDirection = "column";
+
+  // 사령관 이름 추가
+  const commander = document.createElement("div");
+  commander.textContent = troop.commander;
+  commander.style.fontSize = "10px";
+  commander.style.color = "black";
+  commander.style.marginBottom = "5px";
+  container.appendChild(commander);
+
+  // 주력군 마커 컨테이너
+  const markerContainer = document.createElement("div");
+  markerContainer.style.display = "flex";
+  markerContainer.style.alignItems = "center";
+
+  // 병사 이미지 추가
   const img = document.createElement("img");
   img.src = troop.icon;
   img.alt = troop.type;
   img.style.width = "20px";
   img.style.height = "20px";
   img.style.marginRight = "5px";
+  markerContainer.appendChild(img);
 
-  // Create the container
-  const container = document.createElement("div");
-  container.classList.add("troop-container"); // CSS styles for the container
-  container.style.setProperty("--troop-color", troop.color); // Apply dynamic background color
-  container.style.width = `${parseInt(container.style.width)}px`; // Reduce width slightly
-  container.style.position = "absolute";
-  container.style.top = "20px"; // Use `top` instead of `margin-top`
-  container.style.left = "70px";
-
-  // Add text for troop count
+  // 부대 수 표시 텍스트 추가
   const text = document.createElement("div");
   let totalCount = 0;
   for (let key in troop.forces) {
     totalCount += troop.forces[key].count;
   }
   text.textContent = totalCount.toLocaleString();
+  markerContainer.appendChild(text);
 
-  // Add the commander's name
-  const commander = document.createElement("div");
-  commander.textContent = troop.commander; // Set commander's name
-  commander.style.fontSize = "10px"; // Smaller font size for commander
-  commander.style.color = "black"; // White text
-  commander.style.textAlign = "left"; // Center alignment
-  commander.style.position = "absolute"; // Absolute positioning
-  commander.style.bottom = "calc(100% + 10px)"; // Position commander above the marker with spacing
-  commander.style.left = "15px"; // Align with the marker's left edge
-  commander.style.width = "100px"; // Match the width of the marker
+  // 마커 컨테이너를 메인 컨테이너에 추가
+  container.appendChild(markerContainer);
 
-  // Add content to the container
-  container.appendChild(img);
-  container.appendChild(text);
-
-  // Wrap commander and marker in a wrapper
-  const wrapper = document.createElement("div");
-  wrapper.style.position = "relative"; // Ensure proper positioning for the commander and marker
-  wrapper.style.display = "inline-block"; // Stack elements properly without squishing
-  wrapper.appendChild(commander);
-  wrapper.appendChild(container);
-
-  return wrapper; // Return the wrapper containing commander and marker
+  return container;
 }
 
 function getReinforcementIcon(container) {
